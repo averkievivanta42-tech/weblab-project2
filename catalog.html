@@ -8,7 +8,6 @@
 </head>
 <body>
 
-  <!-- Хедер -->
   <header class="header">
     <div class="container nav">
       <a href="index.html" class="logo">CYBER<span>FORGE</span></a>
@@ -17,122 +16,86 @@
         <li><a href="catalog.html" class="active">Каталог</a></li>
         <li><a href="contacts.html">Контакти</a></li>
       </ul>
+      <div id="userArea" class="user-panel"></div>
     </div>
   </header>
 
-  <!-- Каталог Layout (Grid: Sidebar + Main Content) -->
   <div class="container catalog-page">
-    <h1 style="margin-bottom: 2rem;">Каталог ігрових та робочих станцій</h1>
-    
+    <h1 style="margin: 1.5rem 0 0.5rem 0;">Каталог ігрових та робочих станцій</h1>
+    <p style="color: var(--text-muted); margin-bottom: 2rem;">Знайдено моделей: <span id="countDisplay" style="color: var(--accent); font-weight: bold;">20</span></p>
+
     <div class="catalog-layout">
-      <!-- Боковой фильтр -->
+      <!-- ФИЛЬТР САЙДБАР -->
       <aside class="filter-sidebar">
-        <h3>Фільтри</h3>
+        <h3>Розумний Фільтр</h3>
         
         <div class="filter-group">
-          <label for="category">Категорія</label>
-          <select id="category">
-            <option>Усі конфігурації</option>
-            <option>Для кіберспорту</option>
-            <option>4K Геймінг</option>
-            <option>Робота з 3D / Відео</option>
+          <label for="searchTxt">Пошук по комплектації (CPU/GPU)</label>
+          <input type="text" id="searchTxt" placeholder="Наприклад: RTX 4070 або Ryzen...">
+        </div>
+
+        <div class="filter-group">
+          <label for="catSelect">Конфігурація</label>
+          <select id="catSelect">
+            <option value="all">Усі категорії</option>
+            <option value="gaming">Геймінг</option>
+            <option value="work">Робота і 3D</option>
+            <option value="budget">Бюджетні</option>
           </select>
         </div>
 
         <div class="filter-group">
-          <label for="gpu">Відеокарта</label>
-          <select id="gpu">
-            <option>Будь-яка</option>
-            <option>RTX 4060 / Ti</option>
-            <option>RTX 4070 / Super</option>
-            <option>RTX 4080 / 4090</option>
-          </select>
+          <label>Діапазон ціни (₴)</label>
+          <div class="price-inputs">
+            <input type="number" id="minPrice" placeholder="Від: 0">
+            <input type="number" id="maxPrice" placeholder="До: 160000">
+          </div>
         </div>
 
-        <div class="filter-group">
-          <label for="price">Максимальна ціна (₴)</label>
-          <input type="number" id="price" placeholder="150 000">
-        </div>
-
-        <button class="btn" style="width: 100%;">Застосувати</button>
+        <button class="btn" style="width: 100%; margin-bottom: 0.5rem;" onclick="applyFilters()">Застосувати фільтр</button>
+        <button class="btn btn-secondary" style="width: 100%;" onclick="resetFilters()">Скинути</button>
       </aside>
 
-      <!-- Сетка товаров (CSS Grid) -->
-      <section class="product-grid">
-        
-        <!-- Карточка 1 -->
-        <article class="product-card">
-          <img class="product-img" src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=600&q=80" alt="PC 1">
-          <div class="product-info">
-            <h3 class="product-title">CyberForge Start</h3>
-            <ul class="specs-list">
-              <li>• Ryzen 5 5600</li>
-              <li>• RTX 3060 12GB</li>
-              <li>• 16GB RAM / 500GB SSD</li>
-            </ul>
-            <div class="card-bottom">
-              <span class="price">27 400 ₴</span>
-              <button class="btn">Купити</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- Карточка 2 -->
-        <article class="product-card">
-          <img class="product-img" src="https://images.unsplash.com/photo-1593640408182-31c70c8268f5?auto=format&fit=crop&w=600&q=80" alt="PC 2">
-          <div class="product-info">
-            <h3 class="product-title">CyberForge Prime</h3>
-            <ul class="specs-list">
-              <li>• Core i5-13600KF</li>
-              <li>• RTX 4070 12GB</li>
-              <li>• 32GB RAM / 1TB SSD</li>
-            </ul>
-            <div class="card-bottom">
-              <span class="price">56 200 ₴</span>
-              <button class="btn">Купити</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- Карточка 3 -->
-        <article class="product-card">
-          <img class="product-img" src="https://images.unsplash.com/photo-1616588589596-65f37e1123c2?auto=format&fit=crop&w=600&q=80" alt="PC 3">
-          <div class="product-info">
-            <h3 class="product-title">CyberForge Creator</h3>
-            <ul class="specs-list">
-              <li>• Ryzen 9 7900X</li>
-              <li>• RTX 4070 Ti Super</li>
-              <li>• 64GB DDR5 / 2TB SSD</li>
-            </ul>
-            <div class="card-bottom">
-              <span class="price">89 900 ₴</span>
-              <button class="btn">Купити</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- Карточка 4 -->
-        <article class="product-card">
-          <img class="product-img" src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80" alt="PC 4">
-          <div class="product-info">
-            <h3 class="product-title">CyberForge Overkill</h3>
-            <ul class="specs-list">
-              <li>• Core i9-14900KS</li>
-              <li>• RTX 4090 24GB Liquid</li>
-              <li>• 64GB RAM 7200MHz</li>
-            </ul>
-            <div class="card-bottom">
-              <span class="price">165 000 ₴</span>
-              <button class="btn">Купити</button>
-            </div>
-          </div>
-        </article>
-
-      </section>
+      <!-- СЕТКА ДЛЯ 20 ТОВАРОВ -->
+      <section id="catalogGrid" class="product-grid"></section>
     </div>
   </div>
 
-  <!-- Футер -->
+  <!-- Окно авторизации -->
+  <div id="authModal" class="modal-overlay">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeAuthModal()">×</button>
+      <div class="auth-tabs">
+        <div id="tabLogin" class="auth-tab active" onclick="switchAuthTab('login')">Вхід</div>
+        <div id="tabReg" class="auth-tab" onclick="switchAuthTab('reg')">Реєстрація</div>
+      </div>
+      <form id="formLogin" onsubmit="handleLogin(event)" style="display: grid; gap: 0.8rem;">
+        <div class="form-group"><label>Email</label><input type="email" id="loginEmail" required></div>
+        <div class="form-group"><label>Пароль</label><input type="password" id="loginPass" required></div>
+        <button type="submit" class="btn">Увійти</button>
+      </form>
+      <form id="formReg" onsubmit="handleRegister(event)" style="display: none; gap: 0.8rem;">
+        <div class="form-group"><label>Нікнейм</label><input type="text" id="regNick" required></div>
+        <div class="form-group"><label>Email</label><input type="email" id="regEmail" required></div>
+        <div class="form-group"><label>Телефон</label><input type="tel" id="regPhone" required></div>
+        <div class="form-group"><label>Пароль</label><input type="password" id="regPass" required></div>
+        <button type="submit" class="btn">Зареєструватися</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- База данных окно -->
+  <div id="dbModal" class="modal-overlay">
+    <div class="modal-box" style="max-width: 700px; overflow-x: auto;">
+      <button class="modal-close" onclick="closeDbModal()">×</button>
+      <h3 style="color: var(--accent); margin-bottom: 0.5rem;">🗄️ База даних користувачів</h3>
+      <table class="db-table">
+        <thead><tr><th>ID</th><th>Нік</th><th>Email</th><th>Тел</th><th>Пароль</th></tr></thead>
+        <tbody id="dbUsersList"></tbody>
+      </table>
+    </div>
+  </div>
+
   <footer class="footer">
     <div class="container footer-inner">
       <div class="logo">CYBER<span>FORGE</span></div>
@@ -141,5 +104,94 @@
     </div>
   </footer>
 
+  <script src="app.js"></script>
+
+  <!-- Скрипт 20 ПК и динамической фильтрации -->
+  <script>
+    // 20 РЕАЛЬНЫХ ПК
+    const productsData = [
+      { id: 1, title: 'CyberForge Office Pro', category: 'budget', price: 14500, cpu: 'Core i3-10100', gpu: 'Intel UHD 630', ram: '8GB', ssd: '256GB', img: 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=500&q=80' },
+      { id: 2, title: 'CyberForge Start Eco', category: 'budget', price: 18200, cpu: 'Ryzen 3 4100', gpu: 'GTX 1650 4GB', ram: '16GB', ssd: '500GB', img: 'https://images.unsplash.com/photo-1593640408182-31c70c8268f5?auto=format&fit=crop&w=500&q=80' },
+      { id: 3, title: 'CyberForge Casual', category: 'budget', price: 21900, cpu: 'Core i5-10400F', gpu: 'GTX 1660 Super', ram: '16GB', ssd: '512GB', img: 'https://images.unsplash.com/photo-1587202372634-32705e3bf49c?auto=format&fit=crop&w=500&q=80' },
+      { id: 4, title: 'CyberForge Streamer V1', category: 'gaming', price: 27500, cpu: 'Ryzen 5 3600', gpu: 'RTX 3050 8GB', ram: '16GB', ssd: '1TB', img: 'https://images.unsplash.com/photo-1547394765-185e1e68f34e?auto=format&fit=crop&w=500&q=80' },
+      { id: 5, title: 'CyberForge Cyber Esports', category: 'gaming', price: 31200, cpu: 'Ryzen 5 5600', gpu: 'RTX 3060 12GB', ram: '16GB', ssd: '1TB', img: 'https://images.unsplash.com/photo-1624705002806-5d72df19c3ad?auto=format&fit=crop&w=500&q=80' },
+      { id: 6, title: 'CyberForge Pulse 4060', category: 'gaming', price: 35900, cpu: 'Core i5-12400F', gpu: 'RTX 4060 8GB', ram: '32GB', ssd: '1TB', img: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=500&q=80' },
+      { id: 7, title: 'CyberForge Render V1', category: 'work', price: 42000, cpu: 'Ryzen 7 5700X', gpu: 'RTX 3060 Ti 8GB', ram: '32GB', ssd: '2TB', img: 'https://images.unsplash.com/photo-1616588589596-65f37e1123c2?auto=format&fit=crop&w=500&q=80' },
+      { id: 8, title: 'CyberForge Shadow Ti', category: 'gaming', price: 46800, cpu: 'Core i5-13400F', gpu: 'RTX 4060 Ti 8GB', ram: '32GB', ssd: '1TB', img: 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=500&q=80' },
+      { id: 9, title: 'CyberForge White Pearl', category: 'gaming', price: 53500, cpu: 'Core i5-13600KF', gpu: 'RTX 4070 12GB White', ram: '32GB', ssd: '1TB', img: 'https://images.unsplash.com/photo-1593640408182-31c70c8268f5?auto=format&fit=crop&w=500&q=80' },
+      { id: 10, title: 'CyberForge AMD Speed', category: 'gaming', price: 58900, cpu: 'Ryzen 7 7700X', gpu: 'Radeon RX 7800 XT', ram: '32GB DDR5', ssd: '1TB', img: 'https://images.unsplash.com/photo-1587202372634-32705e3bf49c?auto=format&fit=crop&w=500&q=80' },
+      { id: 11, title: 'CyberForge Apex Super', category: 'gaming', price: 66200, cpu: 'Ryzen 7 7800X3D', gpu: 'RTX 4070 Super 12GB', ram: '32GB DDR5', ssd: '2TB', img: 'https://images.unsplash.com/photo-1547394765-185e1e68f34e?auto=format&fit=crop&w=500&q=80' },
+      { id: 12, title: 'CyberForge Architect 3D', category: 'work', price: 74000, cpu: 'Core i7-13700K', gpu: 'RTX 4070 Ti 12GB', ram: '64GB DDR5', ssd: '2TB', img: 'https://images.unsplash.com/photo-1624705002806-5d72df19c3ad?auto=format&fit=crop&w=500&q=80' },
+      { id: 13, title: 'CyberForge Cyberpunk Edition', category: 'gaming', price: 81500, cpu: 'Core i7-14700KF', gpu: 'RTX 4070 Ti Super 16GB', ram: '32GB DDR5', ssd: '2TB', img: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=500&q=80' },
+      { id: 14, title: 'CyberForge Studio Master', category: 'work', price: 89900, cpu: 'Ryzen 9 7900X', gpu: 'RTX 4080 16GB', ram: '64GB DDR5', ssd: '2TB', img: 'https://images.unsplash.com/photo-1616588589596-65f37e1123c2?auto=format&fit=crop&w=500&q=80' },
+      { id: 15, title: 'CyberForge Night Raid', category: 'gaming', price: 95000, cpu: 'Core i9-13900KF', gpu: 'RTX 4080 Super 16GB', ram: '32GB DDR5', ssd: '2TB', img: 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=500&q=80' },
+      { id: 16, title: 'CyberForge 4K Elite', category: 'gaming', price: 109000, cpu: 'Ryzen 7 7800X3D', gpu: 'RTX 4080 Super 16GB Liquid', ram: '64GB DDR5', ssd: '2TB', img: 'https://images.unsplash.com/photo-1593640408182-31c70c8268f5?auto=format&fit=crop&w=500&q=80' },
+      { id: 17, title: 'CyberForge Cinema 8K', category: 'work', price: 122000, cpu: 'Core i9-14900K', gpu: 'RTX 4090 24GB', ram: '96GB DDR5', ssd: '4TB', img: 'https://images.unsplash.com/photo-1587202372634-32705e3bf49c?auto=format&fit=crop&w=500&q=80' },
+      { id: 18, title: 'CyberForge Liquid Beast', category: 'gaming', price: 138000, cpu: 'Core i9-14900KF', gpu: 'RTX 4090 Suprim Liquid', ram: '64GB 7200MHz', ssd: '4TB', img: 'https://images.unsplash.com/photo-1547394765-185e1e68f34e?auto=format&fit=crop&w=500&q=80' },
+      { id: 19, title: 'CyberForge Threadripper', category: 'work', price: 152000, cpu: 'TR 7960X 24-Cores', gpu: 'RTX 4090 24GB', ram: '128GB DDR5', ssd: '8TB', img: 'https://images.unsplash.com/photo-1624705002806-5d72df19c3ad?auto=format&fit=crop&w=500&q=80' },
+      { id: 20, title: 'CyberForge GODLIKE Extreme', category: 'gaming', price: 169000, cpu: 'Ryzen 9 7950X3D Custom', gpu: 'Dual RTX 4090 Water', ram: '128GB DDR5', ssd: '8TB Gen5', img: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=500&q=80' }
+    ];
+
+    // Отрисовка товаров
+    function renderProducts(list) {
+      const grid = document.getElementById('catalogGrid');
+      const count = document.getElementById('countDisplay');
+      count.textContent = list.length;
+
+      if (list.length === 0) {
+        grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); font-size: 1.2rem; padding: 3rem;">За вашим запитом нічого не знайдено 😔 Спробуйте змінити фільтри цін або параметри.</p>';
+        return;
+      }
+
+      grid.innerHTML = list.map(item => `
+        <article class="product-card">
+          <img class="product-img" src="${item.img}" alt="${item.title}">
+          <div class="product-info">
+            <h3 class="product-title">${item.title}</h3>
+            <ul class="specs-list">
+              <li>• Процесор: ${item.cpu}</li>
+              <li>• Відеокарта: ${item.gpu}</li>
+              <li>• ОЗП: ${item.ram}</li>
+              <li>• Диск: ${item.ssd}</li>
+            </ul>
+            <div class="card-bottom">
+              <span class="price">${item.price.toLocaleString('uk-UA')} ₴</span>
+              <button class="btn btn-sm" onclick="alert('Товар ${item.title} додано до замовлення!')">Купити</button>
+            </div>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    // Логика фильтрации
+    function applyFilters() {
+      const search = document.getElementById('searchTxt').value.toLowerCase().trim();
+      const cat = document.getElementById('catSelect').value;
+      const min = parseFloat(document.getElementById('minPrice').value) || 0;
+      const max = parseFloat(document.getElementById('maxPrice').value) || Infinity;
+
+      const filtered = productsData.filter(p => {
+        const matchesCategory = (cat === 'all') || (p.category === cat);
+        const matchesPrice = (p.price >= min && p.price <= max);
+        const fullText = (p.title + ' ' + p.cpu + ' ' + p.gpu).toLowerCase();
+        const matchesSearch = !search || fullText.includes(search);
+
+        return matchesCategory && matchesPrice && matchesSearch;
+      });
+
+      renderProducts(filtered);
+    }
+
+    function resetFilters() {
+      document.getElementById('searchTxt').value = '';
+      document.getElementById('catSelect').value = 'all';
+      document.getElementById('minPrice').value = '';
+      document.getElementById('maxPrice').value = '';
+      renderProducts(productsData);
+    }
+
+    // Инициализация при загрузке
+    renderProducts(productsData);
+  </script>
 </body>
 </html>
