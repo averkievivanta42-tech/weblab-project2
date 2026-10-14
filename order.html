@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Оформлення замовлення — CyberForge</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Бібліотека інтерактивної карти Leaflet (Безкоштовно) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+
+  <header class="header">
+    <div class="container nav">
+      <a href="index.html" class="logo">CYBER<span>FORGE</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Головна</a></li>
+        <li><a href="catalog.html">Каталог</a></li>
+        <li><a href="order.html" class="active">Оформлення</a></li>
+        <li><a href="contacts.html">Контакти</a></li>
+      </ul>
+      <div id="userArea" class="user-panel"></div>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1 style="margin: 2rem 0 0.5rem 0;">Оформлення замовлення</h1>
+    <p style="color: var(--text-muted); margin-bottom: 2rem;">Перевірте обрану конфігурацію, оберіть відділення на карті та спосіб оплати.</p>
+
+    <div class="order-layout">
+      
+      <!-- ЛІВА КОЛОНКА: ВИБРАНИЙ КОМП'ЮТЕР -->
+      <div class="order-box">
+        <h3>🛒 Обраний комп'ютер</h3>
+        <div id="selectedPcDetails"></div>
+      </div>
+
+      <!-- ПРАВА КОЛОНКА: ДАНІ ДОСТАВКИ, КАРТА ТА ОПЛАТА -->
+      <form class="order-box" onsubmit="submitOrder(event)">
+        <h3>📦 Доставка та Оплата</h3>
+        
+        <div class="filter-group">
+          <label>Прізвище та Ім'я одержувача</label>
+          <input type="text" id="custName" placeholder="Іванов Іван" required>
+        </div>
+
+        <div class="filter-group">
+          <label>Номер телефону</label>
+          <input type="tel" id="custPhone" placeholder="+38 (0__) ___-__-__" required>
+        </div>
+
+        <!-- КАРТА КИЄВА ТА ВІДДІЛЕННЯ НОВОЇ ПОШТИ -->
+        <div class="filter-group">
+          <label><b>Оберіть відділення Нової Пошти в Києві (клікніть на карті):</b></label>
+          <div id="npMap"></div>
+          <select id="branchSelect" onchange="syncBranchFromSelect()" required>
+            <option value="">-- Оберіть зі списку або на карті --</option>
+            <option value="Відділення №1 (вул. Пирогівський шлях, 135)">Відділення №1 (вул. Пирогівський шлях, 135)</option>
+            <option value="Відділення №4 (вул. Академіка Вербицького, 24)">Відділення №4 (вул. Академіка Вербицького, 24)</option>
+            <option value="Відділення №12 (вул. Прирічна, 11, Оболонь)">Відділення №12 (вул. Прирічна, 11, Оболонь)</option>
+            <option value="Відділення №32 (вул. Івана Федорова, 32, Печерськ)">Відділення №32 (вул. Івана Федорова, 32, Печерськ)</option>
+            <option value="Відділення №76 (просп. Берестейський, 67, Святошин)">Відділення №76 (просп. Берестейський, 67, Святошин)</option>
+            <option value="Шоурум CyberForge (вул. Хрещатик, 24, Самовивіз)">Шоурум CyberForge (вул. Хрещатик, 24, Самовивіз)</option>
+          </select>
+        </div>
+
+        <!-- СПОСІБ ОПЛАТИ -->
+        <label style="display:block; font-size:0.85rem; color:var(--text-muted); margin-top:1rem;">Спосіб оплати:</label>
+        <div class="payment-toggle">
+          <div id="payCash" class="payment-option active" onclick="setPayment('cash')">
+            💵 При отриманні (Накладений платіж)
+          </div>
+          <div id="payOnline" class="payment-option" onclick="setPayment('online')">
+            💳 Оплата картою онлайн
+          </div>
+        </div>
+
+        <!-- БЛОК ДЛЯ ВВЕДЕННЯ БАНКІВСЬКОЇ КАРТКИ -->
+        <div id="cardBlock" class="card-fields">
+          <div style="grid-column: 1/-1;">
+            <label style="font-size:0.8rem; color:var(--text-muted);">Номер банківської картки (16 цифр)</label>
+            <input type="text" id="cardNumber" placeholder="4149 •••• •••• 1234" maxlength="19">
+          </div>
+          <div>
+            <label style="font-size:0.8rem; color:var(--text-muted);">Термін (MM/YY)</label>
+            <input type="text" id="cardDate" placeholder="12/28" maxlength="5">
+          </div>
+          <div>
+            <label style="font-size:0.8rem; color:var(--text-muted);">CVV / CVC (3 цифри)</label>
+            <input type="password" id="cardCvv" placeholder="•••" maxlength="3">
+          </div>
+        </div>
+
+        <button type="submit" class="btn" style="width: 100%; margin-top: 1.5rem; font-size: 1.1rem;">
+          Підтвердити замовлення
+        </button>
+      </form>
+
+    </div>
+  </main>
+
+  <!-- МОДАЛЬНЕ ДІАЛОГОВЕ ВІКНО ПІДТВЕРДЖЕННЯ ЗАМОВЛЕННЯ -->
+  <div id="orderSuccessModal" class="modal-overlay">
+    <div class="modal-box" style="text-align: center;">
+      <div style="font-size: 3.5rem;">🎉</div>
+      <h3 style="color: var(--accent); margin-bottom: 0.8rem;">Замовлення успішно оформлено!</h3>
+      <p id="orderSuccessText" style="color: var(--text-muted); margin-bottom: 1.5rem;"></p>
+      <button class="btn" onclick="window.location.href='index.html'">Повернутися на головну</button>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="logo">CYBER<span>FORGE</span></div>
+      <p>© 2024 CyberForge PC. Всі права захищені.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    let activePaymentMethod = 'cash';
+    let currentPC = null;
+
+    // Завантаження вибраного ПК (якщо немає - ставимо перший за замовчуванням)
+    function loadOrderPC() {
+      const saved = localStorage.getItem('selected_pc_order');
+      if (saved) {
+        currentPC = JSON.parse(saved);
+      } else {
+        currentPC = PRODUCTS_DB[0];
+      }
+
+      document.getElementById('selectedPcDetails').innerHTML = `
+        <img src="${currentPC.img}" alt="${currentPC.title}" style="border-radius: 8px; margin-bottom: 1rem; height: 200px; width:100%; object-fit: cover;" onerror="this.src='https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=600&q=80'">
+        <h4>${currentPC.title}</h4>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.4rem;">
+          • ${currentPC.cpu}<br>
+          • ${currentPC.gpu}<br>
+          • ${currentPC.ram} | ${currentPC.ssd}
+        </p>
+        <div style="margin-top: 1rem; border-top: 1px solid var(--border-color); padding-top: 0.8rem;">
+          <span style="font-size: 1.4rem; color: var(--accent); font-weight: bold;">До сплати: ${currentPC.price.toLocaleString('uk-UA')} ₴</span>
+        </div>
+      `;
+    }
+
+    // НАЛАШТУВАННЯ КАРТИ КИЄВА ТА ВІДДІЛЕНЬ НОВОЇ ПОШТИ
+    function initKyivMap() {
+      // Центр Києва (Хрещатик)
+      const map = L.map('npMap').setView([50.4501, 30.5234], 11);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap'
+      }).addTo(map);
+
+      // Реальні координати відділень Нової Пошти у Києві
+      const branches = [
+        { name: "Відділення №1 (вул. Пирогівський шлях, 135)", coords: [50.3683, 30.5542] },
+        { name: "Відділення №4 (вул. Академіка Вербицького, 24)", coords: [50.4124, 30.6657] },
+        { name: "Відділення №12 (вул. Прирічна, 11, Оболонь)", coords: [50.5142, 30.5121] },
+        { name: "Відділення №32 (вул. Івана Федорова, 32, Печерськ)", coords: [50.4285, 30.5186] },
+        { name: "Відділення №76 (просп. Берестейський, 67, Святошин)", coords: [50.4587, 30.4072] },
+        { name: "Шоурум CyberForge (вул. Хрещатик, 24, Самовивіз)", coords: [50.4472, 30.5222] }
+      ];
+
+      branches.forEach(b => {
+        const marker = L.marker(b.coords).addTo(map);
+        marker.bindPopup(`<b>${b.name}</b><br><small>Натисніть, щоб обрати</small>`);
+        marker.on('click', () => {
+          document.getElementById('branchSelect').value = b.name;
+        });
+      });
+    }
+
+    function syncBranchFromSelect() {
+      // Синхронізація випадаючого списку
+    }
+
+    function setPayment(method) {
+      activePaymentMethod = method;
+      const cashBtn = document.getElementById('payCash');
+      const onlineBtn = document.getElementById('payOnline');
+      const cardBlock = document.getElementById('cardBlock');
+
+      if (method === 'online') {
+        onlineBtn.classList.add('active');
+        cashBtn.classList.remove('active');
+        cardBlock.style.display = 'grid';
+        document.getElementById('cardNumber').required = true;
+        document.getElementById('cardDate').required = true;
+        document.getElementById('cardCvv').required = true;
+      } else {
+        cashBtn.classList.add('active');
+        onlineBtn.classList.remove('active');
+        cardBlock.style.display = 'none';
+        document.getElementById('cardNumber').required = false;
+        document.getElementById('cardDate').required = false;
+        document.getElementById('cardCvv').required = false;
+      }
+    }
+
+    // ВІДПРАВКА ТА ЗБЕРЕЖЕННЯ ЗАМОВЛЕННЯ
+    function submitOrder(e) {
+      e.preventDefault();
+      const name = document.getElementById('custName').value;
+      const phone = document.getElementById('custPhone').value;
+      const branch = document.getElementById('branchSelect').value;
+
+      if (!branch) {
+        alert('Будь ласка, оберіть відділення на карті або зі списку!');
+        return;
+      }
+
+      // Збереження в базу даних замовлень
+      const orders = JSON.parse(localStorage.getItem('cyber_orders')) || [];
+      const orderId = 'CF-' + Math.floor(100000 + Math.random() * 900000);
+      orders.push({
+        orderId,
+        pcTitle: currentPC.title,
+        price: currentPC.price,
+        customer: name,
+        phone,
+        branch,
+        payment: activePaymentMethod
+      });
+      localStorage.setItem('cyber_orders', JSON.stringify(orders));
+
+      // Показ діалогового вікна
+      document.getElementById('orderSuccessText').innerHTML = `
+        Дякуємо, <b>${name}</b>!<br>
+        Номер вашого замовлення: <b style="color:var(--accent);">${orderId}</b>.<br>
+        Комп'ютер <b>${currentPC.title}</b> буде відправлено на <b>${branch}</b>.<br>
+        Сума: <b>${currentPC.price.toLocaleString('uk-UA')} ₴</b>. Менеджер зв'яжеться з вами за номером ${phone}.
+      `;
+      document.getElementById('orderSuccessModal').classList.add('active');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadOrderPC();
+      initKyivMap();
+    });
+  </script>
+</body>
+</html>
