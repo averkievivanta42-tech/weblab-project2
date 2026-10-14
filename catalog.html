@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Каталог ПК — CyberForge</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Хедер -->
+  <header class="header">
+    <div class="container nav">
+      <a href="index.html" class="logo">CYBER<span>FORGE</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Головна</a></li>
+        <li><a href="catalog.html" class="active">Каталог</a></li>
+        <li><a href="contacts.html">Контакти</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Каталог Layout (Grid: Sidebar + Main Content) -->
+  <div class="container catalog-page">
+    <h1 style="margin-bottom: 2rem;">Каталог ігрових та робочих станцій</h1>
+    
+    <div class="catalog-layout">
+      <!-- Боковой фильтр -->
+      <aside class="filter-sidebar">
+        <h3>Фільтри</h3>
+        
+        <div class="filter-group">
+          <label for="category">Категорія</label>
+          <select id="category">
+            <option>Усі конфігурації</option>
+            <option>Для кіберспорту</option>
+            <option>4K Геймінг</option>
+            <option>Робота з 3D / Відео</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="gpu">Відеокарта</label>
+          <select id="gpu">
+            <option>Будь-яка</option>
+            <option>RTX 4060 / Ti</option>
+            <option>RTX 4070 / Super</option>
+            <option>RTX 4080 / 4090</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="price">Максимальна ціна (₴)</label>
+          <input type="number" id="price" placeholder="150 000">
+        </div>
+
+        <button class="btn" style="width: 100%;">Застосувати</button>
+      </aside>
+
+      <!-- Сетка товаров (CSS Grid) -->
+      <section class="product-grid">
+        
+        <!-- Карточка 1 -->
+        <article class="product-card">
+          <img class="product-img" src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=600&q=80" alt="PC 1">
+          <div class="product-info">
+            <h3 class="product-title">CyberForge Start</h3>
+            <ul class="specs-list">
+              <li>• Ryzen 5 5600</li>
+              <li>• RTX 3060 12GB</li>
+              <li>• 16GB RAM / 500GB SSD</li>
+            </ul>
+            <div class="card-bottom">
+              <span class="price">27 400 ₴</span>
+              <button class="btn">Купити</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Карточка 2 -->
+        <article class="product-card">
+          <img class="product-img" src="https://images.unsplash.com/photo-1593640408182-31c70c8268f5?auto=format&fit=crop&w=600&q=80" alt="PC 2">
+          <div class="product-info">
+            <h3 class="product-title">CyberForge Prime</h3>
+            <ul class="specs-list">
+              <li>• Core i5-13600KF</li>
+              <li>• RTX 4070 12GB</li>
+              <li>• 32GB RAM / 1TB SSD</li>
+            </ul>
+            <div class="card-bottom">
+              <span class="price">56 200 ₴</span>
+              <button class="btn">Купити</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Карточка 3 -->
+        <article class="product-card">
+          <img class="product-img" src="https://images.unsplash.com/photo-1616588589596-65f37e1123c2?auto=format&fit=crop&w=600&q=80" alt="PC 3">
+          <div class="product-info">
+            <h3 class="product-title">CyberForge Creator</h3>
+            <ul class="specs-list">
+              <li>• Ryzen 9 7900X</li>
+              <li>• RTX 4070 Ti Super</li>
+              <li>• 64GB DDR5 / 2TB SSD</li>
+            </ul>
+            <div class="card-bottom">
+              <span class="price">89 900 ₴</span>
+              <button class="btn">Купити</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Карточка 4 -->
+        <article class="product-card">
+          <img class="product-img" src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80" alt="PC 4">
+          <div class="product-info">
+            <h3 class="product-title">CyberForge Overkill</h3>
+            <ul class="specs-list">
+              <li>• Core i9-14900KS</li>
+              <li>• RTX 4090 24GB Liquid</li>
+              <li>• 64GB RAM 7200MHz</li>
+            </ul>
+            <div class="card-bottom">
+              <span class="price">165 000 ₴</span>
+              <button class="btn">Купити</button>
+            </div>
+          </div>
+        </article>
+
+      </section>
+    </div>
+  </div>
+
+  <!-- Футер -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="logo">CYBER<span>FORGE</span></div>
+      <p>© 2024 CyberForge PC. Всі права захищені.</p>
+      <p>Пн-Сб: 10:00 — 20:00</p>
+    </div>
+  </footer>
+
+</body>
+</html>

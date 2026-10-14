@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Контакти — CyberForge</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Хедер -->
+  <header class="header">
+    <div class="container nav">
+      <a href="index.html" class="logo">CYBER<span>FORGE</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Головна</a></li>
+        <li><a href="catalog.html">Каталог</a></li>
+        <li><a href="contacts.html" class="active">Контакти</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Секция контактов (Grid) -->
+  <main class="container contact-page">
+    <h1 class="section-title">Зв'яжіться з нами</h1>
+    
+    <div class="contact-layout">
+      <!-- Контактная информация (Flex внутри колонок) -->
+      <div class="contact-info">
+        <div class="info-item">
+          <h4>Наш Шоурум</h4>
+          <p>м. Київ, вул. Хрещатик, 24, Офіс 12</p>
+          <p>Можливість протестувати будь-яку збірку в іграх перед покупкою.</p>
+        </div>
+
+        <div class="info-item">
+          <h4>Телефони гарячої лінії</h4>
+          <p>+38 (044) 123-45-67</p>
+          <p>+38 (067) 890-12-34 (Telegram, Viber)</p>
+        </div>
+
+        <div class="info-item">
+          <h4>Графік роботи</h4>
+          <p>Понеділок — П'ятниця: 10:00 - 20:00</p>
+          <p>Субота — Неділя: 11:00 - 18:00</p>
+        </div>
+      </div>
+
+      <!-- Форма обратной связи (CSS Grid) -->
+      <form class="contact-form" onsubmit="event.preventDefault(); alert('Дякуємо! Ми зв\'яжемося з вами найближчим часом.');">
+        <h3 style="color: var(--accent);">Замовити консультацію або прорахунок</h3>
+        
+        <div class="form-group">
+          <label for="name">Ваше Ім'я</label>
+          <input type="text" id="name" placeholder="Олександр" required>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Номер телефону</label>
+          <input type="tel" id="phone" placeholder="+38 (0__)-___-__-__" required>
+        </div>
+
+        <div class="form-group">
+          <label for="msg">Побажання до комп'ютера (бюджет, завдання)</label>
+          <textarea id="msg" placeholder="Потрібен ПК для стрімів та Cyberpunk 2077 у 2K..."></textarea>
+        </div>
+
+        <button type="submit" class="btn">Відправити запит</button>
+      </form>
+    </div>
+  </main>
+
+  <!-- Футер -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="logo">CYBER<span>FORGE</span></div>
+      <p>© 2024 CyberForge PC. Всі права захищені.</p>
+      <p>Пн-Сб: 10:00 — 20:00</p>
+    </div>
+  </footer>
+
+</body>
+</html>
